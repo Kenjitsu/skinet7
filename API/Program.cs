@@ -12,19 +12,20 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<StoreContext>(options => 
+builder.Services.AddDbContext<StoreContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+	options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
 
 app.UseAuthorization();
@@ -38,12 +39,12 @@ var logger = services.GetRequiredService<ILogger<Program>>();
 
 try
 {
-    await context.Database.MigrateAsync();
-    await StoreContextSeed.SeedAsync(context);
+	await context.Database.MigrateAsync();
+	await StoreContextSeed.SeedAsync(context);
 }
-catch(Exception ex)
+catch (Exception ex)
 {
-    logger.LogError(ex, "An error ocurred during migration");
+	logger.LogError(ex, "An error ocurred during migration");
 }
 
 app.Run();
