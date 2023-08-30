@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 
 namespace API.Extensions;
 
-public static class Estensions
+public static class ApplicationExtensions
 {
 	public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
 	{
@@ -41,6 +41,14 @@ public static class Estensions
 
 				return new BadRequestObjectResult(errorResponse);
 			};
+		});
+
+		services.AddCors(options =>
+		{
+			options.AddPolicy("CorsPolicy", policy =>
+			{
+				policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+			});
 		});
 
 		return services;

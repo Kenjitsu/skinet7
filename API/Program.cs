@@ -1,7 +1,5 @@
-using API.Errors;
 using API.Extensions;
 using API.Middlewares;
-using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.SeedData;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +24,7 @@ app.UseSwaggerUI();
 
 app.UseStaticFiles();
 
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
