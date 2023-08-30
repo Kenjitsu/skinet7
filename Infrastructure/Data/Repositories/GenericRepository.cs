@@ -41,4 +41,9 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 		return SpecificationEvaluator<TEntity>
 				.GetQuery(_context.Set<TEntity>().AsQueryable(), specification);
 	}
+
+	public async Task<int> CountAsync(ISpecificaition<TEntity> specificaition)
+	{
+		return await ApplySpecification(specificaition).CountAsync();
+	}
 }

@@ -32,4 +32,6 @@ public interface IGenericRepository<TEntity> where TEntity : BaseEntity
 	/// <returns>Lista de una entidad.</returns>
 	Task<IReadOnlyList<TEntity>> ListAsync(ISpecificaition<TEntity> specification);
 
+	Task<int> CountAsync(ISpecificaition<TEntity> specificaition);
+
 }
